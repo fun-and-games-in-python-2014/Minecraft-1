@@ -464,6 +464,7 @@ class Window(pyglet.window.Window):
 
         # Velocity in the y (upward) direction.
         self.dy = 0
+        self.dx = 0
 
         # A list of blocks the player can place. Hit num keys to cycle.
         self.inventory = [BRICK, GRASS, SAND]
@@ -598,6 +599,7 @@ class Window(pyglet.window.Window):
             self.dy -= dt * GRAVITY
             self.dy = max(self.dy, -TERMINAL_VELOCITY)
             dy += self.dy * dt
+        dx += self.dx
         # collisions
         x, y, z = self.position
         x, y, z = self.collide((x + dx, y + dy, z + dz), PLAYER_HEIGHT)
@@ -720,6 +722,10 @@ class Window(pyglet.window.Window):
             self.strafe[1] -= 1
         elif symbol == key.D:
             self.strafe[1] += 1
+        elif symbol == key.U:
+            self.dx += 0.01
+        elif symbol == key.I:
+            self.dx -= 0.01
         elif symbol == key.SPACE:
             if self.dy == 0:
                 self.dy = JUMP_SPEED
